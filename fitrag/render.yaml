@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: fitdocs-rag
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python -c "import rag"   # pre-downloads the embedding model
+    startCommand: streamlit run app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: FASTEMBED_CACHE_PATH
+        value: /opt/render/project/src/.fastembed_cache
+      - key: MIN_SCORE
+        value: "0.55"
+      - key: GROQ_API_KEY
+        sync: false   # you enter this in the Render dashboard

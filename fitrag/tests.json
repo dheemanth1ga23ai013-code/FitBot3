@@ -1,0 +1,7 @@
+[
+ {"id":1,"question":"How much protein per kg of body weight is recommended for muscle gain?","expected":"1.6 to 2.2 g/kg per day","designed_as":"PASS"},
+ {"id":2,"question":"Why do my legs hurt two days after squats?","expected":"DOMS, peaks 24-72 hours (dense retrieval handles the wording mismatch)","designed_as":"PASS"},
+ {"id":3,"question":"Who won the 2022 FIFA World Cup?","expected":"I don't know (out of domain)","designed_as":"PASS"},
+ {"id":4,"question":"How much protein should a pregnant woman eat per day?","expected":"I don't know (docs cover lifters only, not pregnancy)","designed_as":"FAIL: near-topic overreach. The protein chunks are semantically very close, so they clear the threshold and the LLM may wrongly apply the 1.6-2.2 g/kg figure."},
+ {"id":5,"question":"Give me a full weekly plan combining cardio, strength days and rest days.","expected":"Cardio 150-300 min, strength 2+ days, 1-2 rest days (3 different documents)","designed_as":"FAIL: multi-document synthesis. Top-3 chunks may miss one of the three source documents, so the plan is incomplete."}
+]
