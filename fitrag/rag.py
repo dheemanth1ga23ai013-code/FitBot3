@@ -55,7 +55,7 @@ def generate(question, hits):
         if groq:
             r = requests.post("https://api.groq.com/openai/v1/chat/completions",
                 headers={"Authorization": f"Bearer {groq}"}, timeout=60,
-                json={"model": os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"), "temperature": 0,
+                json={"model": os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"), "temperature": 0,
                       "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}]})
             r.raise_for_status()
             return r.json()["choices"][0]["message"]["content"]
@@ -74,6 +74,9 @@ def generate(question, hits):
                 model=os.getenv("CLAUDE_MODEL", "claude-sonnet-4-6"), max_tokens=400, system=SYSTEM,
                 messages=[{"role": "user", "content": user}])
             return msg.content[0].text
+    except Exception as e:
+        return f"(LLM call failed: {e})\n\nBest passage:\n{hits[0]['text']}"
+    return "(No API key set - showing best passage)\n\n" + hits[0]["text"]
 
 # 4. CITE: return answer together with the passages used
 def ask(question):
